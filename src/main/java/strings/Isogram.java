@@ -4,9 +4,6 @@ Implement a function that determines whether a string that contains only letters
 Assume the empty string is an isogram. Ignore letter case. */
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Stream;
 
 public class Isogram {
 
