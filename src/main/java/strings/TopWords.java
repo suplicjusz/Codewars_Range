@@ -26,45 +26,48 @@ public class TopWords {
         }
         String temp = wordsMap.toString();
         temp = temp.substring(1, temp.length() - 1);
-        String[] arr2 = temp.split(", ");
-        stringList.clear();
-        stringList = Arrays.asList(arr2);
+
+        List<String> stringList1 = List.of(temp.split(", "));
+        List<String> stringList2 = new ArrayList<>(stringList1);
+
         String firstPlace = "";
         String secondPlace = "";
         String thirdPlace = "";
         int tempInt = 0;
         int tempIndex = 0;
         if (stringList.size() > 0) {
-            for (int i = 0; i < stringList.size(); i++) {
-                if (getNumber(stringList.get(i)) > tempInt) {
-                    firstPlace = stringList.get(i);
-                    tempInt = getNumber(stringList.get(i));
+            for (int i = 0; i < stringList2.size(); i++) {
+                if (getNumber(stringList2.get(i)) > tempInt && stringList2.get(i).charAt(0) != '\'') {
+                    firstPlace = stringList2.get(i);
+                    tempInt = getNumber(stringList2.get(i));
                     tempIndex = i;
                 }
             }
-            stringList.remove(tempIndex);  //Why in this line is UnsupportedOperationException???? Why?!?! :< I try to do it extra loop!
+            stringList2.remove(tempIndex);
         }
-        if (stringList.size() > 0) {
+        if (stringList2.size() > 0) {
             tempInt = 0;
-            for (int i = 0; i < stringList.size(); i++) {
-                if (getNumber(stringList.get(i)) > tempInt) {
-                    secondPlace = stringList.get(i);
-                    tempInt = getNumber(stringList.get(i));
+            for (int i = 0; i < stringList2.size(); i++) {
+                if (getNumber(stringList2.get(i)) > tempInt && stringList2.get(i).charAt(0) != '\'') {
+                    secondPlace = stringList2.get(i);
+                    tempInt = getNumber(stringList2.get(i));
                     tempIndex = i;
                 }
             }
-            stringList.remove(tempIndex);
+            stringList2.remove(tempIndex);
         }
-        if (stringList.size() > 0) {
+        if (stringList2.size() > 0) {
             tempInt = 0;
-            for (String word : stringList) {
-                if (getNumber(word) > tempInt) {
-                    thirdPlace = word;
-                    tempInt = getNumber(word);
+            for (int i = 0; i < stringList2.size(); i++) {
+                if (getNumber(stringList2.get(i)) > tempInt && stringList2.get(i).charAt(0) != '\'') {
+                    thirdPlace = stringList2.get(i);
+                    tempInt = getNumber(stringList2.get(i));
                 }
             }
         }
-
+        System.out.println(firstPlace);
+        System.out.println(secondPlace);
+        System.out.println(thirdPlace);///
         firstPlace = cutNumber(firstPlace);
         secondPlace = cutNumber(secondPlace);
         thirdPlace = cutNumber(thirdPlace);
@@ -90,6 +93,7 @@ public class TopWords {
                 counter *= 10;
             }
         }
+
         return x;
     }
 
@@ -107,9 +111,9 @@ public class TopWords {
     public static void main(String[] args) {
         String s = " Ala has a cats and cats are cute#    and cats are an animals. Ala's cats are called: Filemon and Boniface ";
         String a = "  //wont won't won't ";
-        List<String> list = top3(a);
+        String c = "    '    ";
+        List<String> list = top3(c);
         System.out.println(list);
 
-        System.out.println(getNumber(s));
     }
 }
